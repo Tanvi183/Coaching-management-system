@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
 use Image;
 use App\Batch;
@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class StudentController extends Controller
+class StudentRegistationController extends Controller
 {
     // Validation
     protected function studentValidation($request){
@@ -195,7 +195,6 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function studentDetails($id)
     {
         $students= $this->getSingleStudent($id);
@@ -213,26 +212,6 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    protected function uploadPhoto($request,$student){
-        $image = $request->file('student_photo');
-		$filename  = time() . '.' . $image->getClientOriginalExtension();
-		$path = public_path('students/' . $filename);
-		Image::make($image->getRealPath())->resize(468, 249)->save($path);
-		$student->student_photo = 'public/students/'.$filename;
-		$student->save();
-    }
-
-    protected function updateStudentPhoto($request)
-    {
-        $student = Student::find($request->student_id);
-        if (isset($student->student_photo)) {
-            @unlink($student->student_photo);
-            $this->uploadPhoto($request,$student);
-        }else{
-            $this->uploadPhoto($request,$student);
-        }
-    }
-
     public function BasicInfoUpdate(Request $request)
     {
         $student = Student::find($request->student_id);
@@ -244,8 +223,30 @@ class StudentController extends Controller
         $student->sms_mobile = $request->sms_mobile;
 
         if (isset($request->student_photo)) {
-            $this->updateStudentPhoto($request);
+            $student = Student::find($request->student_id);
+            if (isset($student->student_photo)) {
+                @unlink(public_path('students/'.$student->student_photo));
+                $file = $request->file('student_photo');
+                $imageName = $file->getClientOriginalName();
+                $directory = public_path('students/');
+                $imgUrl = $directory.$imageName;
+                Image::make($file)->resize(300, 300)->save($imgUrl);
+                $student->student_photo = $imgUrl;
+            }else{
+                $file = $request->file('student_photo');
+                $imageName = $file->getClientOriginalName();
+                $directory = public_path('students/');
+                $imgUrl = $directory.$imageName;
+                Image::make($file)->resize(300, 300)->save($imgUrl);
+                $student->student_photo = $imgUrl;
+            }
         }
+
+
+        // if ($request->file('slide_image')) {
+        //     @unlink(public_path('Slider/'.$slides->slide_image));
+        //     $slides->slide_image = $this->slideImageUpload($request);
+        // }
 
         $student->address = $request->address;
         $student->password = $request->sms_mobile;
@@ -254,6 +255,17 @@ class StudentController extends Controller
 
         return $this->studentDetails($request->student_id)->with('message','Student Information Update Successfully.');
     }
+
+    // protected function updateStudentPhoto($request)
+    // {
+
+    // }
+
+    // protected function uploadPhoto($request,$student){
+
+    //     $student->save();
+    // }
+
     /**
      * Remove the specified resource from storage.
      *

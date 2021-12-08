@@ -20,13 +20,6 @@
                     <tr><th>Role</th><td>{{ $users->role }}</td> </tr>
                     <tr><th>Mobile</th><td>{{ $users->mobile }}</td> </tr>
                     <tr><th>Email</th><td>{{ $users->email }}</td> </tr>
-                    <tr><th style="width: 100px;">Action</th>
-                      <td>
-                         <a href="{{ Route('Change.user.info',['id'=>$users->id]) }}" class="btn btn-sm btn-dark">Change Info</a>
-                         <a href="{{ Route('Change.user.profile',['id'=>$users->id]) }}" class="btn btn-sm btn-info">Change Profile</span></a>
-                         <a href="{{ Route('Change.user.password',['id'=>$users->id]) }}" class="btn btn-sm btn-danger">Change Password</a>
-                      </td>
-                    </tr>
 
                 </table>
             </div>

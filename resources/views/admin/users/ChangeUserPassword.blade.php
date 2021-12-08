@@ -1,19 +1,17 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
 
 <!--Content Start-->
 <section class="container-fluid">
     <div class="row content registation-form">
         <div class="col-12 pl-0 pr-0">
-
-          @include('admin.includes.alert')
           
             <div class="form-group">
                 <div class="col-sm-12">
                     <h4 class="text-center font-weight-bold font-italic mt-3">Reset User Password</h4>
                 </div>
             </div>
-            <form method="POST" action="{{ route('update-user-password') }}" enctype="multipart/form-data" autocomplete="off" class="form-inline">
+            <form method="POST" action="{{ route('update.user.password') }}" autocomplete="off" class="form-inline">
                  @csrf
 
                 <div class="form-group col-12 mb-3">

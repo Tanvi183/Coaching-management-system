@@ -1,11 +1,9 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
     <!--Content Start-->
 <section class="container-fluid">
     <div class="row content">
         <div class="col-12 ml-0 mr-0">
-
-             @include('admin.includes.alert')
 
             <div class="form-group">
                 <div class="col-sm-12">

@@ -18,11 +18,11 @@ class UserRegistationController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'role' => ['required'],
-            'name' => ['required', 'string', 'max:50'],
-            'mobile' => ['required', 'string', 'min:11', 'max:20', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role'    => ['required'],
+            'name'    => ['required', 'string', 'max:50'],
+            'mobile'  => ['required', 'string', 'min:11', 'max:20', 'unique:users'],
+            'email'   => ['required', 'string', 'email', 'max:80', 'unique:users'],
+            'password'=> ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -110,30 +110,8 @@ class UserRegistationController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $users = User::findorfail($id);
+        return view('admin.users.show_user', compact('users'));
     }
 
     /**
@@ -144,6 +122,121 @@ class UserRegistationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $users = User::find($id);
+        $users->delete();
+        // Notification...
+        $notification=array(
+            'messege'=>'User Delete Successfully.',
+            'alert-type'=>'success'
+        );
+        return redirect()->route('users.index')->with($notification);
     }
+
+    
+    // User Profile Section
+    public function userProfile($id)
+    {
+        $users = User::findorfail($id);
+        return view('Admin.users.profile',compact('users'));
+    }
+
+    // User Info
+    public function ChageInfo($id)
+    {
+        $Info = User::findorfail($id);
+        return view('Admin.users.ChangeUserInfo',compact('Info'));
+    }
+
+    // Info Update
+    public function InfoUpdate(Request $request)
+    {
+        $id = $request->user_id;
+
+        $this->validate($request,[
+            'name' => 'required|string|max:50',
+            'mobile' => 'required|string|min:11|max:13',
+            'email' => 'required|string|email|max:255|unique:users,email,'. $id,
+        ]);
+        $user = User::findorfail($id);
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $user->save();
+
+        // Notification...
+        $notification=array(
+            'messege'=>'User Update Successfully.',
+            'alert-type'=>'success'
+        );
+        return redirect()->to("user/profile/$id")->with($notification);
+    }
+
+    // Profile Change
+    public function profileChange($id)
+    {
+        $users = User::findorfail($id);
+        return view('Admin.users.ChangeUserImage',compact('users'));
+    }
+
+    // User Profile Add and Update
+    public function UpdatePhoto(Request $request)
+    {
+        $users = User::findorfail($request->user_id);
+
+        if (isset($users->avatar)) {
+            @unlink(public_path('admin/profile/'.$users->avatar ));
+            $this->uploadPhoto($request, $users);
+            // Notification...
+            $notification=array(
+                'messege'=>'Profile Update Successfully.',
+                'alert-type'=>'success'
+            );
+            return redirect()->to("user/profile/$request->user_id")->with($notification);
+        }else{
+            $this->uploadPhoto($request, $users);
+            // Notification...
+            $notification=array(
+                'messege'=>'Profile Add Successfully.',
+                'alert-type'=>'success'
+            );
+            return redirect()->to("user/profile/$request->user_id")->with($notification);
+        }
+    }
+
+    // Password Change
+    public function changePassword($id)
+    {
+       $user = User::findorfail($id);
+       return view('admin.users.ChangeUserPassword',compact('user'));
+    }
+    
+    // Password Update
+    public function passwordUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'new_password' =>'required|string|min:8'
+        ]);
+
+        $oldPassword = $request->password;
+        $user = User::findorfail($request->user_id);
+
+        if(Hash::check($oldPassword,$user->password)){
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            // Notification...
+            $notification=array(
+                'messege'=>'Password Update Successfully.',
+                'alert-type'=>'success'
+            );
+            return redirect()->to("user/profile/$request->user_id")->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'Password does Not Match, Please try Again Later!',
+                'alert-type'=>'success'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
 }

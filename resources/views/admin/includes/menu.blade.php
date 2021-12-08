@@ -11,16 +11,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('home') }}"><span class="fa fa-home"></span> Home <span class="sr-only">(current)</span></a>
             </li>
-            
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Student
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li class=""><a class="dropdown-item" href="{{ route('student-registation') }}">Registration</a></li>
-                    <li class=""><a class="dropdown-item" href="{{ route('all-running-student-list') }}">All Running Student List</a></li>
-                    <li class=""><a class="dropdown-item" href="{{ route('class-selection-form') }}">Class Wise Student List</a></li>
-                    <li class=""><a class="dropdown-item" href="{{ route('batch-selection-form') }}">Batch Wise Student List</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('students.create') }}">Registration</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('students.class.wise') }}">Class Wise Student List</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('students.batch.wise') }}">Batch Wise Student List</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('students.index') }}">All Running Student List</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('all.past.student') }}">All Past Students</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('all.student') }}">All Students</a></li>
                 </ul>
             </li>
 
@@ -40,7 +42,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     School
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li class=""><a class="dropdown-item" href="{{ route('schools.create') }}">Add School</a></li>
                     <li class=""><a class="dropdown-item" href="{{ route('schools.index') }}">School List</a></li>
                 </ul>
@@ -50,7 +52,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Class
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li class=""><a class="dropdown-item" href="{{ route('classes.create') }}">Add Class</a></li>
                     <li class=""><a class="dropdown-item" href="{{ route('classes.index') }}">Class List</a></li>
                 </ul>
@@ -60,7 +62,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Batch
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li class=""><a class="dropdown-item" href="{{ route('batches.create') }}">Add Batch</a></li>
                     <li class=""><a class="dropdown-item" href="{{ route('batches.index') }}">Batch List</a></li>
                 </ul>
@@ -115,7 +117,7 @@
                                 <li><a href="{{ route('users.create') }}" class="dropdown-item">Add User</a></li>
                                 <li><a href="{{ route('users.index') }}" class="dropdown-item">User List</a></li>
                             @endif
-                            <li><a href="{{ route('user-profile',['id'=>Auth::user()->id]) }}" class="dropdown-item">User Profile</a></li>
+                            <li><a href="{{ route('user.profile.view',['id'=>Auth::user()->id]) }}" class="dropdown-item">User Profile</a></li>
                         </ul>
                     </li>
                 </ul>

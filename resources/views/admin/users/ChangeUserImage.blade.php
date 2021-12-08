@@ -1,5 +1,5 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
 
 <!--Content Start-->
 <section class="container-fluid">
@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-        <form action="{{ route('update-user-photo') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('update.user.photo') }}" method="post" enctype="multipart/form-data">
         	@csrf
             <div class="table-responsive p-1">
                 <table class="table table-striped table-bordered dt-responsive nowrap text-center" style="width: 100%;">

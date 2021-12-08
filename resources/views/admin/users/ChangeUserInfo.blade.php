@@ -1,5 +1,5 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
 
 <!--Content Start-->
 <section class="container-fluid">
@@ -10,7 +10,7 @@
                     <h4 class="text-center font-weight-bold font-italic mt-3">User Info Edit</h4>
                 </div>
             </div>
-            <form method="POST" action="{{ route('user-info-update') }}" enctype="multipart/form-data" autocomplete="off" class="form-inline">
+            <form method="POST" action="{{ route('user.info.update') }}" autocomplete="off" class="form-inline">
                  @csrf
 
                 <div class="form-group col-12 mb-3">

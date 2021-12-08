@@ -1,4 +1,4 @@
-    <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="studentBasicInfoUpdate" tabindex="-1" role="dialog" aria-labelledby="studentBasicInfoUpdateTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      
+
       <form action="{{ route('basic-info-update') }}" method="post" id="studentTypeUpdate" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
@@ -32,7 +32,7 @@
                       <option value="{{ $school->id }}" {{ $students[0]->school_id == $school->id ? 'selected' : '' }}>{{ $school->school_name }}</option>
                     @endforeach
                     <span class="text-danger"></span>
-                  </select> 
+                  </select>
 
                     @error('school_name')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -86,14 +86,14 @@
             <div class="form-group row ">
                 <label for="" class="col-form-label col-sm-3 text-right"></label>
                 <div class="col-sm-9">
-                  <img class="img-thumbnail" src="@if(isset($students[0]->student_photo)){{ asset($students[0]->student_photo) }} @else {{ asset('/admin/assets/images/avatar.png') }} @endif" alt="Student Photo" id="studentPhoto" style="max-width: 50%;">
+                  <img class="img-thumbnail" src="@if(isset($students[0]->student_photo)){{ asset('public/student/'.$students[0]->student_photo) }} @else {{ asset('/admin/assets/images/avatar.png') }} @endif" alt="Student Photo" id="studentPhoto" style="max-width: 50%;">
                 </div>
             </div>
 
             <div class="form-group row ">
                 <label for="studentPhoto" class="col-form-label col-sm-3 text-right">Student Photo</label>
                 <div class="col-sm-9">
-                    <input type="file" class="form-control @error('student_photo') is-invalid @enderror" name="student_photo" id="photo" onchange="showImage(this, 'studentPhoto')">
+                    <input type="file" class="form-control @error('student_photo') is-invalid @enderror" name="student_photo" id="student_photo" onchange="showImage(this, 'studentPhoto')">
                     @error('student_photo')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror

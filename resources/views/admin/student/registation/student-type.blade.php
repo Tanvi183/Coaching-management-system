@@ -35,7 +35,7 @@
 		if ($(this).prop('checked')){
 			var classId = $('#classId').val();
 			if (classId && typeId) {
-				$.get("{{ route('batch-roll-form') }}",{
+				$.get("{{ route('batch.roll.form') }}",{
 					class_id:classId,
 					type_id:typeId,
 				},function (data) {
@@ -53,7 +53,7 @@
 	$('#classId').change(function () {
         var classId = $(this).val();
         if (classId) {
-            $.get("{{ route('bring-student-type') }}",{ 
+            $.get("{{ route('bring.student.type') }}",{ 
                 class_id:classId 
             },function(data){
                     console.log(data);

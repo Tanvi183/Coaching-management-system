@@ -63,64 +63,14 @@ class StudentTypeController extends Controller
     		'student_type'=>'required|string',
     	]);
 
-    	// if ($request->ajax()) {
+    	if ($request->ajax()) 
+        {
 	    	$data = new StudentType();
 	    	$data->class_id = $request->class_id;
 	    	$data->student_type = $request->student_type;
 	    	$data->status = 1;
 	    	$data->save();
-    	// }
-         // Notification...
-         $notification=array(
-            'messege'=>'StudentType Add Successfully.',
-            'alert-type'=>'success'
-        );
-    	return redirect()->back()->with($notification);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    	}
     }
 
     // Student Type Unpublish
@@ -160,28 +110,19 @@ class StudentTypeController extends Controller
         $data->student_type = $request->student_type;
         $data->save();
 
-        // $studenttype = $this->getStudentType();
-        // $classes = ClassName::all();
-        // return view('admin.settings.studentType.student-type-table',[
-        //     'studenttype'=>$studenttype,
-        //     'classes'=>$classes,
-        // ]);
         $studenttype = $this->getStudentType();
         $classes = ClassName::all();
-         // Notification...
-         $notification=array(
-            'messege'=>'Student Type Update Successfully.',
-            'alert-type'=>'success'
-        );
-        return view('admin.settings.studentType.student-type-list', compact('studenttype','classes'))->with($notification);
+        return view('admin.settings.studentType.student-type-table',[
+            'studenttype'=>$studenttype,
+            'classes'=>$classes,
+        ]);
     }
 
     // Student Type Delete
     public function studentTypeDelete(Request $request)
     {
         $data = StudentType::find($request->type_id);
-        $data->status = 3;
-        $data->save();
+        $data->delete();
 
         $studenttype = $this->getStudentType();
         $classes = ClassName::all();

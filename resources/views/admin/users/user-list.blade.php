@@ -33,9 +33,14 @@
 	                        <td>{{ $row->mobile }}</td>
 	                        <td>{{ $row->email }}</td>
 	                        <td>
-	                            <a href="#" class="btn btn-sm btn-dark"><span class="fa fa-eye"></span></a>
-	                            <a href="#" class="btn btn-sm btn-info"><span class="fa fa-edit"></span></a>
-	                            <a href="#" class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></a>
+	                            <a href="{{ route('users.show', $row->id) }}" class="btn btn-sm btn-dark"><span class="fa fa-eye"></span></a>
+                                <button type="button" class="btn btn-sm btn-danger" title="Delete">
+                                    <i onclick="deleteItem({{ $row->id }})" class="fa fa-trash-alt"></i>
+                                </button>
+                                <form id="delete_form_{{ $row->id }}" method="POST" action="{{ route('users.destroy', $row->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
 	                        </td>
 	                    </tr>
 	                    @endforeach

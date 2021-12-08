@@ -1,11 +1,9 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
     <!--Content Start-->
     <section class="container-fluid">
         <div class="row content">
             <div class="col-sm-12 pl-0 pr-0">
-
-        @include('admin.includes.alert')
         
                 <div class="form-group">
                     <div class="col-sm-12">
@@ -13,7 +11,21 @@
                     </div>
                 </div>
 
-                 <form action="{{ route('student-save') }}" method="post" enctype="multipart/form-data" class="form-inline">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        @if ($errors->count() == 1)
+                            {{ $errors->first() }}
+                        @else
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                @endif
+                
+                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" class="form-inline">
                     @csrf
                     <div class="form-group col-md-6 mb-3">
                         <label for="studentName" class="col-sm-4 col-form-label text-right">Student Name</label>
@@ -63,7 +75,7 @@
                         <span class="text-danger"></span>
                     </div>
 
- {{--                    <div class="form-group col-md-6 mb-3">
+                   {{-- <div class="form-group col-md-6 mb-3">
                         <label for="motherMobile" class="col-sm-4 col-form-label text-right">Mother's Mobile No.</label>
                         <input type="text" name="mother_mobile" class="form-control col-sm-8" id="motherMobile" placeholder="8801XXXXXXXXX" value="" minlength="13" maxlength="13" required>
                         <span class="text-danger"></span>
@@ -100,33 +112,32 @@
                         <input type="file" name="student_photo" class="form-control col-sm-8" id="photo">
                     </div>
 
-{{--                     <div class="form-group col-md-6 mb-3">
+                    {{-- <div class="form-group col-md-6 mb-3">
                         <label for="studentRoll" class="col-sm-4 col-form-label text-right">Roll Number</label>
                         <input type="text" name="student_roll" class="form-control col-sm-8" id="studentRoll" placeholder="Roll Number" value="" required/>
                         <span class="text-danger"></span>
-                    </div>
+                    </div> --}}
 
- --}}
 
-                <div class="col-12">
-                    <div class="row" id="batchInfo">
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="classId" class="col-sm-4 col-form-label text-right">Class Name</label>
-                            <select name="class_id" class="form-control col-sm-8" id="classId" required>
-                                <option value="">--Select Class</option>
-                                @foreach($classes as $class)
-                                    <option value="{{ $class->id }}">{{ $class->class_name }}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger"></span>
+                    <div class="col-12">
+                        <div class="row" id="batchInfo">
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="classId" class="col-sm-4 col-form-label text-right">Class Name</label>
+                                <select name="class_id" class="form-control col-sm-8" id="classId" required>
+                                    <option value="">--Select Class</option>
+                                    @foreach($classes as $class)
+                                        <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="col-sm-4 col-form-label text-right">Student Type</label>
+                                <div class="col-sm-8" id="type" name="type_id"><span class="text-info">Please Select A Class First...</span></div>
+                            </div>
                         </div>
-
-                        <div class="form-group col-md-6 mb-3">
-                            <label class="col-sm-4 col-form-label text-right">Student Type</label>
-                            <div class="col-sm-8" id="type" name="type_id"><span class="text-info">Please Select A Class First...</span></div>
-                        </div>
                     </div>
-                </div>
 
                     <div class="form-group col-12 mb-3 pl-2">
                         <label for="address" class="col-sm-2 col-form-label text-right">Address</label>
@@ -148,7 +159,7 @@
     $('#classId').change(function () {
         var classId = $(this).val();
         if (classId) {
-            $.get("{{ route('bring-student-type') }}",{ 
+            $.get("{{ route('bring.student.type') }}",{ 
                 class_id:classId 
             },function(data){
                     console.log(data);

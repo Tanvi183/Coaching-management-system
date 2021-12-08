@@ -34,85 +34,91 @@
             </div>
         </div>
     </section>
+
     <!--Content End-->
     @include('admin.settings.studentType.model.add-form')
     @include('admin.settings.studentType.model.edit-form')
 
-@endsection
-          
-
-<script>
-        {{-- Data Add with ajax Not Work --}}
-
-    $('#studentTypeInsert').submit(function (e) {
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var data = $(this).serialize();
-        var method = $(this).attr('method');
-        $('#studentTypeAddModel #reset').click();
-        $('#studentTypeAddModel').modal('hide');
-        $.ajax({
-            data : data,
-            type : method,
-            url  : url,
-            success: function() {
-                $.get("{{ route('studenttypes.index') }}", function (data) {
-                    $('#studentTypeTable').empty().html(data);
-                })
-            }
+    <script>
+        
+        //--- Student Type Add ----//
+        $('#studentTypeInsert').submit(function (e) {
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var data = $(this).serialize();
+            var method = $(this).attr('method');
+            $('#studentTypeAddModel #reset').click();
+            $('#studentTypeAddModel').modal('hide');
+            $.ajax({
+                data : data,
+                type : method,
+                url  : url,
+                success: function() {
+                    $.get("{{ route('studenttypes.index') }}", function (data) {
+                        $('#studentTypeTable').empty().html(data);
+                    })
+                }
+            })
         })
-    });
-            {{-- Data Inactive --}}
-
-    function Unpublish(id) {
-        $.get("{{ Route('studenttypes.unpublish') }}", { type_id:id}, function (data) {
-            console.log(data);
-            $('#studentTypeTable').empty().html(data);
-        });
-    }
-
-            {{-- Data Active --}}
-    function Publish(id) {
-        $.get("{{ Route('studenttypes.publish') }}", { type_id:id}, function (data) {
-            console.log(data);
-            $('#studentTypeTable').empty().html(data);
-        });
-    }   
-
-            {{-- Data Edit --}}    
-    function StudentTypeEdit(id,name) {
-        $('#studentTypeEditModel').find('#StudentType').val(name);
-        $('#studentTypeEditModel').find('#typeId').val(id);
-        $('#studentTypeEditModel').modal('show');
-     } 
-            {{--Data Update Not Work--}} 
-
-    $('#studentTypeUpdate').submit(function (e){
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var data = $(this).serialize();
-        var method = $(this).attr('method');
-        $('#studentTypeAddModel #reset').click();
-        $('#studentTypeAddModel').modal('hide');
-        $.ajax({
-            type : method,
-            url  : url,
-            data : data,
-            success: function() {
-               $('#studentTypeTable').empty().html(data);
-            }
-        })
-    });
-
-            {{--Data Delete--}} 
-    function StudentTypeDelete(id) {
-        var msg = 'If you want to Delete this item Press OK';
-        if (confirm(msg)) {
-            $.get("{{ route('studenttypes.delete') }}", { type_id:id}, function (data) {
-            console.log(data);
-            $('#studentTypeTable').empty().html(data);
+        
+        // -- Data Inactive --- //
+        function Unpublish(id) {
+            $.get("{{ Route('studenttypes.unpublish') }}", { type_id:id}, function (data) {
+                console.log(data);
+                $('#studentTypeTable').empty().html(data);
             });
         }
-    }
-</script>
+    
+        // -- Data Active -- //
+        function Publish(id) {
+            $.get("{{ Route('studenttypes.publish') }}", { type_id:id}, function (data) {
+                console.log(data);
+                $('#studentTypeTable').empty().html(data);
+            });
+        }   
+    
+        //-- Data Edit --//    
+        function StudentTypeEdit(id,name) {
+            $('#studentTypeEditModel').find('#StudentType').val(name);
+            $('#studentTypeEditModel').find('#typeId').val(id);
+            $('#studentTypeEditModel').modal('show');
+        }
+
+        //-- Data Update --//
+        $('#studentTypeUpdate').submit(function (e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var data = $(this).serialize();
+            var method = $(this).attr('method');
+            $('#studentTypeEditModel #reset').click();
+            $('#studentTypeEditModel').modal('hide');
+            $.ajax({
+                type : method,
+                url  : url,
+                data : data,
+                success: function() {
+                    $.get("{{ route('studenttypes.index') }}", function (data) {
+                        $('#studentTypeTable').empty().html(data);
+                    })
+                }
+            })
+        });
+    
+        //--Data Delete--// 
+        function StudentTypeDelete(id) {
+            var msg = 'If you want to Delete this item Press OK';
+            if (confirm(msg)) {
+                $.get("{{ route('studenttypes.delete') }}", { type_id:id}, function (data) {
+                console.log(data);
+                $('#studentTypeTable').empty().html(data);
+                });
+            }
+        }
+    </script>
+
+@endsection
+          
+ {{-- Data Add with ajax Not Work --}}
+
+
     

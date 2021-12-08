@@ -1,4 +1,4 @@
-    <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="studentTypeAddModel" tabindex="-1" role="dialog" aria-labelledby="studentTypeAddModelTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
@@ -9,7 +9,7 @@
         </button>
       </div>
       
-      <form action="{{ route('studenttypes.store') }}" method="POST" id="studentTypeInsert">
+      <form id="studentTypeInsert" action="{{ route('studenttypes.store') }}" method="POST">
         @csrf
         <div class="modal-body">
             <div class="form-group row ">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="reset" class="btn btn-warning" data-dismiss="modal" id="reset">Reset</button>
+          <button id="reset" type="reset" class="btn btn-warning" data-dismiss="modal">Reset</button>
           <button type="submit" class="btn btn-success">Save</button>
         </div>
       </form>

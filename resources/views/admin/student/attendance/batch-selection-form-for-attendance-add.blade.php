@@ -1,11 +1,11 @@
-@extends('admin.master')
-@section('main-content')
+@extends('admin.admin_layouts')
+@section('admin_content')
     <!--Content Start-->
 <section class="container-fluid">
     <div class="row content">
         <div class="col-12 ml-0 mr-0">
 
-            @include('admin.includes.alert')
+            {{-- @include('admin.includes.alert') --}}
 
             <form action="{{ route('save-student-attendance') }}" method="post">
                 @csrf
@@ -54,65 +54,60 @@
 
 <!--Content End-->
 
+    <style>#overlay .loader{display: none}</style>
+    @include('admin.includes.loader')
 
-
-                
-
-<style>#overlay .loader{display: none}</style>
-@include('admin.includes.loader')
-
-<script>
-    $('#classId').change(function () {
-        var classId = $(this).val();
-        if (classId) {
-            $('#overlay .loader').show();
-            $.get("{{ route('class-wise-student-type') }}",{class_id: classId},function(data){
-                $('#overlay .loader').hide();
-                console.log(data);
-                $('#typeId').empty().html(data);
-            })
-        }else{
-            $('#typeId').empty().html('<option value="">--Select Class--</option>');
-        }
-    });
-
-    $('#typeId').change(function () {
-        var classId = $('#classId').val();
-        var typeId = $(this).val();
-
-            if (classId && typeId) {
+    <script>
+        $('#classId').change(function () {
+            var classId = $(this).val();
+            if (classId) {
                 $('#overlay .loader').show();
-                $.get("{{ route('class-and-type-wise-batch-list') }}", {
-                    class_id:classId,
-                    type_id:typeId,
-                }, function (data) {
-                    console.log(data);
+                $.get("{{ route('class-wise-student-type') }}",{class_id: classId},function(data){
                     $('#overlay .loader').hide();
-                    $('#batchId').empty().html(data);
-                })
-            }
-    });
-
-    $('#batchId').change(function () {
-        var classId = $('#classId').val();
-        var typeId = $('#typeId').val();
-        var batchId = $(this).val();
-
-            if (classId && typeId && batchId) {
-                $('#overlay .loader').show();
-                $.get("{{ route('batch-wise-student-list-for-attendance') }}", {
-                    class_id:classId,
-                    type_id:typeId,
-                    batch_id:batchId,
-                }, function (data) {
                     console.log(data);
-                    $('#overlay .loader').hide();
-                    $('#studentList').empty().html(data);
+                    $('#typeId').empty().html(data);
                 })
             }else{
-                $('#studentList').empty();
+                $('#typeId').empty().html('<option value="">--Select Class--</option>');
             }
-    });
+        });
 
-</script>
+        $('#typeId').change(function () {
+            var classId = $('#classId').val();
+            var typeId = $(this).val();
+
+                if (classId && typeId) {
+                    $('#overlay .loader').show();
+                    $.get("{{ route('class-and-type-wise-batch-list') }}", {
+                        class_id:classId,
+                        type_id:typeId,
+                    }, function (data) {
+                        console.log(data);
+                        $('#overlay .loader').hide();
+                        $('#batchId').empty().html(data);
+                    })
+                }
+        });
+
+        $('#batchId').change(function () {
+            var classId = $('#classId').val();
+            var typeId = $('#typeId').val();
+            var batchId = $(this).val();
+
+                if (classId && typeId && batchId) {
+                    $('#overlay .loader').show();
+                    $.get("{{ route('batch-wise-student-list-for-attendance') }}", {
+                        class_id:classId,
+                        type_id:typeId,
+                        batch_id:batchId,
+                    }, function (data) {
+                        console.log(data);
+                        $('#overlay .loader').hide();
+                        $('#studentList').empty().html(data);
+                    })
+                }else{
+                    $('#studentList').empty();
+                }
+        });
+    </script>
 @endsection

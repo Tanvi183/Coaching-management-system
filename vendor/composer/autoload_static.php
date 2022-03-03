@@ -501,6 +501,7 @@ class ComposerStaticInita16d4bb8171bf92abd8cda337f3a884f
     );
 
     public static $classMap = array (
+        'App\\Attendance' => __DIR__ . '/../..' . '/app/Attendance.php',
         'App\\Batch' => __DIR__ . '/../..' . '/app/Batch.php',
         'App\\ClassName' => __DIR__ . '/../..' . '/app/ClassName.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
@@ -521,6 +522,7 @@ class ComposerStaticInita16d4bb8171bf92abd8cda337f3a884f
         'App\\Http\\Controllers\\School\\SchoolController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/SchoolController.php',
         'App\\Http\\Controllers\\Slider\\SliderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Slider/SliderController.php',
         'App\\Http\\Controllers\\StudentAttendanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentAttendanceController.php',
+        'App\\Http\\Controllers\\StudentController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentController.php',
         'App\\Http\\Controllers\\Student\\StudentRegistationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Student/StudentRegistationController.php',
         'App\\Http\\Controllers\\Student\\StudentTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Student/StudentTypeController.php',
         'App\\Http\\Controllers\\Users\\UserRegistationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Users/UserRegistationController.php',

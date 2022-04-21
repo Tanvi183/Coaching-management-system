@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{ asset('/public/admin/css/style.css') }}">
     <!--    jQuery-->
     <script src="{{asset('/public/admin/js/jquery-3.4.1.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <link rel="stylesheet" type="text/css"href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!--    Favicon-->
     <link rel="shortcut icon" href="{{ asset('/public/admin/images/favicon.png" type="image/x-icon') }}">
 </head>
@@ -39,7 +39,7 @@
     @yield('admin_content')
 
     @include('admin.includes.loader')
-    
+
     @include('admin.includes.footer')
 
 <!--    magnific popup-->
@@ -57,67 +57,46 @@
 <!--    Theme Script-->
 <script src="{{asset('/public/admin/js/script.js')}}"></script>
 <!------- START: Toaster ------->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    @if(Session::has('messege'))
-      var type="{{Session::get('alert-type','info')}}"
-      switch(type){
-          case 'info':
-               toastr.info("{{ Session::get('messege') }}");
-               break;
-          case 'success':
-              toastr.success("{{ Session::get('messege') }}");
-              break;
-          case 'warning':
-             toastr.warning("{{ Session::get('messege') }}");
-              break;
-          case 'error':
-              toastr.error("{{ Session::get('messege') }}");
-              break;
-      }
+    @if(Session::has('message'))
+    toastr.options =
+    {
+        "closeButton" : true,
+        "progressBar" : true
+    }
+    toastr.success("{{ session('message') }}");
     @endif
- </script>  
+
+    @if(Session::has('error'))
+    toastr.options =
+    {
+        "closeButton" : true,
+        "progressBar" : true
+    }
+            toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(Session::has('info'))
+    toastr.options =
+    {
+        "closeButton" : true,
+        "progressBar" : true
+    }
+            toastr.info("{{ session('info') }}");
+    @endif
+
+    @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+        toastr.warning("{{ session('warning') }}");
+    @endif
+  </script>
  <!-------- END: Toaster -------->
-
- <!----- START: Sweet-Alert  ----->
-<script src="{{ asset('/public/admin/assets/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
-<script src="{{ asset('/public/admin/assets/sweetalert2/sweet-alert.init.js')}}"></script>
-
-<script type="text/javascript">
-  function deleteItem(id){
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'mr-2 btn btn-danger'
-        },
-        buttonsStyling: false,
-      })
-      swalWithBootstrapButtons.fire({
-          title: 'Are you sure?',
-          text: "You Want to Delete This!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'No, cancel!',
-          reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                event.preventDefault();
-                document.getElementById('delete_form_'+id).submit();
-              } else if (
-                      // Read more about handling dismissals
-                      result.dismiss === Swal.DismissReason.cancel
-                  ) {
-                      swalWithBootstrapButtons.fire(
-                          'Cancelled',
-                          'Your Data is Save :)',
-                          'error'
-                      )
-                  }
-          })
-  }
-</script>
- <!----- END: Sweet-Alert  ----->
 
 </body>
 </html>

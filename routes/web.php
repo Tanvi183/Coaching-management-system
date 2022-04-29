@@ -89,6 +89,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/add-attendance','StudentAttendanceController@batchSelectionFormForAttendanceAdd')->name('add-attendance');
         Route::get('/batch-wise-student-list-for-attendance','StudentAttendanceController@batchWiseStudentListForAttendance')->name('batch-wise-student-list-for-attendance');
         Route::post('/add-attendance','StudentAttendanceController@saveStudentAttendance')->name('save-student-attendance');
+        Route::get('/view','StudentAttendanceController@viewAttendance')->name('view-attendance');
+        Route::get('/batch-wise-student-attendance-view','StudentAttendanceController@batchWiseStudentAttendanceView')->name('batch-wise-student-attendance-view');
     });
 
             //Date Management Section Start//

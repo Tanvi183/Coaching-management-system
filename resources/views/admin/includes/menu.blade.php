@@ -32,9 +32,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li class=""><a class="dropdown-item" href="{{ route('add-attendance') }}">Add Attendance</a></li>
-
-                    <li class=""><a class="dropdown-item" href="{{-- {{ route('all-running-student-list') }} --}}">View Attendance</a></li>
-                    <li class=""><a class="dropdown-item" href="{{-- {{ route('class-selection-form') }} --}}">Edit Attendance</a></li>
+                    <li class=""><a class="dropdown-item" href="{{ route('view-attendance') }}">View Attendance</a></li>
+                    <li class=""><a class="dropdown-item" href="#">Edit Attendance</a></li>
                 </ul>
             </li>
 

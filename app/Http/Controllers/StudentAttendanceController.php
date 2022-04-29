@@ -91,4 +91,34 @@ class StudentAttendanceController extends Controller
         }
     }
 
+    public function viewAttendance()
+    {
+        $classes = ClassName::whereStatus(1)->get();
+        return view('admin.student.attendance.attendance-view',[
+            'classes'=>$classes
+        ]);
+    }
+
+    public function batchWiseStudentAttendanceView(Request $request)
+    {
+        // return $request;
+        $date = $request->date;
+
+        $allData = DB::table('attendances')
+                    ->join('students','attendances.student_id','=','students.id')
+                    ->join('studenttype_details','studenttype_details.student_id','=','students.id')
+                    ->join('schools','students.school_id','=','schools.id')
+                    ->select('attendances.*','students.student_name','students.sms_mobile','schools.school_name','studenttype_details.roll_on')
+                    ->where([
+                        'attendances.class_id' => $request->class_id,
+                        'attendances.type_id' => $request->type_id,
+                        'attendances.batch_id' => $request->batch_id,
+                        'studenttype_details.type_id' => $request->type_id
+                    ])->whereDate('attendances.created_at',$date)
+                    ->orderBy('studenttype_details.roll_on','ASC')->get();
+
+        return view('admin.student.attendance.student-list-for-attendence-view',['allData'=>$allData]);
+        // return response()->json($allData);
+    }
+
 }

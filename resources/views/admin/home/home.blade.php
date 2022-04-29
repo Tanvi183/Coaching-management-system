@@ -8,7 +8,7 @@
             <div class="owl-carousel">
                 @foreach($slides as $slide)
                 <div class="item">
-                    <img src="@if(isset($slide->slide_image)){{ asset('/public/Slider/'.$slide->slide_image) }} @else @endif " alt="Slide Image">
+                    <img src="@if(isset($slide->slide_image)){{ asset('/public/Slider/'.$slide->slide_image) }} @endif " alt="Slide Image">
                     <div class="slide-caption">
                         <h2>{{ $slide->slide_title }}</h2>
                         <p>{{ $slide->slide_description }}</p>
